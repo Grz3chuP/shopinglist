@@ -1,24 +1,9 @@
 <script setup lang="ts">
-import {shopingNumber} from "@/store.ts";
+import {shopingNumber, shopingList} from "@/store.ts";
 import {computed, ref} from "vue";
+import AddShoping from "@/components/AddShoping.vue";
 
-let shopingList = ref([
-    {
-  name: 'mleko',
-  count: 1,
-  priority: 1
-  },
-  {
-  name: 'chleb',
-  count: 1,
-  priority: 1
-  },
-  {
-    name: 'wino',
-    count: 1,
-    priority: 1
-}
-  ]);
+
 // Zmienia liczbę produktów do kupienia
   shopingNumber.value = shopingList.value.length;
 
@@ -32,6 +17,7 @@ let shopingList = ref([
   <h2>ShopingList</h2>
     <h3>{{shopingNumber}}</h3>
   </div>
+  <AddShoping/>
   <div class="myShopingList">
     <ul>
       <li v-for="item in shopingList">{{item.name}}</li>

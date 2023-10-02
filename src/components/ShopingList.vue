@@ -22,8 +22,12 @@ const openForm = ref(false)
   <h2>ShopingList</h2>
     <h3>{{shopingList.length}}</h3>
   </div>
-  <button class="openFormButton" @click="toggleForm">Dodaj Produkty</button>
-  <AddShoping v-if="openForm"/>
+
+  <div class="openFormButton ion-activatable ripple-parent rounded-rectangle" @click="toggleForm">Dodaj Produkty
+    <ion-ripple-effect></ion-ripple-effect>
+  </div>
+
+  <AddShoping v-if="openForm" @zamknij="toggleForm"/>
   <div class="myShopingList">
     <ul>
      <ShopingItem/>
@@ -35,12 +39,16 @@ const openForm = ref(false)
 </template>
 
 <style scoped>
+
+
 main{
+  background-color: #aae2ff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+
   width: 100%;
+  height: 100%;
 
 }
 .title{
@@ -55,6 +63,7 @@ main{
   background: #9d9fa6
 }
 .openFormButton {
+  position: relative;
   margin: 10px;
   padding: 5px;
   border-radius: 5px;
@@ -63,5 +72,6 @@ main{
   font-size: 1.5rem;
   cursor: pointer;
   box-shadow: rgba(128, 128, 128, 0.80) 2px 2px 2px 2px;
+  max-width: 200px;
 }
 </style>

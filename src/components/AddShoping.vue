@@ -3,15 +3,17 @@ import {ref} from "vue";
 import {shopingList} from "@/store";
 
 let shopingName = ref('');
+let shopingCount = ref(1);
 
 function addToShopingList() {
   console.log(shopingName.value);
   if (shopingName.value === '') {
     return;
   }
-shopingList.value.push({name: shopingName.value , count: 1, priority: 1})
+shopingList.value.push({name: shopingName.value , count: shopingCount.value, priority: 1 , id: shopingList.value.length})
 console.log(shopingList.value);
   shopingName.value = '';
+  shopingCount.value = 1;
 }
 </script>
 
@@ -22,6 +24,11 @@ console.log(shopingList.value);
     <h3>Dodaj nowy produkt do twojej listy zakupów</h3>
     <form @submit.prevent="addToShopingList" >
       <input type="text" placeholder="Podaj nazwe Produktu" v-model="shopingName">
+      <div class="itemNumberAdd">
+        <label for="count">Ilość</label>
+        <input type="number" id="count" name="count" min="1" max="10"  v-model="shopingCount" >
+        max 10
+      </div>
       <button class="addButton" >Dodaj</button>
     </form>
   </div>
@@ -32,8 +39,8 @@ console.log(shopingList.value);
 
 <style scoped>
 section {
-  width: 50%;
 
+  z-index: 10;
   position: absolute;
   top:50%;
   transform: translateY(-50%);
@@ -51,7 +58,7 @@ section {
   padding: 5px;
   border-radius: 5px;
   box-shadow: rgba(119, 119, 119, 0.6) 2px 3px 2px 0;
-  z-index: 10;
+
   background: beige;
 }
 input {
@@ -81,5 +88,14 @@ form button {
 form button:hover {
   background-color: gray;
   color: white;
+}
+.itemNumberAdd {
+  margin: 5px;
+  padding: 5px;
+}
+label {
+  margin: 5px;
+  padding: 5px;
+  font-size: 1.2rem;
 }
 </style>

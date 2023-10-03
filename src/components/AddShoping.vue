@@ -10,6 +10,7 @@ function addToShopingList() {
   if (shopingName.value === '') {
     return;
   }
+
 shopingList.value.push({name: shopingName.value , count: shopingCount.value, priority: 1 , id: shopingList.value.length , end: false})
 console.log(shopingList.value);
   shopingName.value = '';
@@ -49,7 +50,7 @@ section {
 
   z-index: 10;
   position: absolute;
-  top:50%;
+  top:30%;
   transform: translateY(-50%);
   animation: openTab 0.5s ease-in-out;
 
@@ -62,7 +63,7 @@ section {
   }
   100% {
    opacity: 1;
-    top: 50%;
+    top: 30%;
     transform: translateY(-50%);
   }
 

@@ -135,7 +135,7 @@ i::before {
 }
 @keyframes slideOutToLeft {
   0% {
-    transform: translateX(0);
+    transform: translateX(-10%);
     opacity: 1;
   }
   100% {
@@ -163,6 +163,7 @@ li {
   border-bottom: 1px solid #ccc;
   margin: 10px;
   width: 100%;
+  transform: translateX(-10%);
   position: absolute;
   transition: 0.4s;
 

@@ -2,7 +2,12 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Shoping List</ion-title>
+        <ion-title>
+          <div>
+          <ShoppingHeader/>
+          </div>
+        </ion-title>
+
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
@@ -20,4 +25,6 @@
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 import ShopingList from "@/components/ShopingList.vue";
+import ShoppingHeader from "@/components/ShoppingHeader.vue";
+
 </script>

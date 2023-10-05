@@ -14,7 +14,7 @@ const openForm = ref(false)
   shopingNumber.value = shopingList.value.length;
 
 async function getShopingList() {
-  shopingList.value = await getShoppingListFromFireStoreOrEmptyArray();
+  shopingList.value = await getShoppingListFromFireStoreOrEmptyArray('items');
 }
 getShopingList();
 
@@ -48,7 +48,7 @@ main{
   align-items: center;
 
   width: 100%;
-  height: 100%;
+  height: 100vh;
 
 }
 

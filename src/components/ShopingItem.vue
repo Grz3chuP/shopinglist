@@ -2,6 +2,12 @@
 
 import {shopingList} from "@/store";
 import {ref} from "vue";
+import {
+  addShoppingItemToFireStore,
+  deleteShoppingItemFromFireStore,
+  updateShoppingItemFromFireStore
+} from "@/firestore";
+
 let currentlyDragging = ref(null);
 let dragging = ref(false);
 let xPos = ref(0);
@@ -9,22 +15,23 @@ let xStart = ref(0);
 let fadeOut = ref(false);
 
 function dragStart(e: any, id: any) {
-console.log(e);
-if (!currentlyDragging.value) {
-  currentlyDragging.value = id;
-  dragging.value = true;
-}
+  console.log(e);
+  if (!currentlyDragging.value) {
+    currentlyDragging.value = id;
+    dragging.value = true;
+  }
 
   xStart.value = e.clientX;
 
 }
+
 function onDrag(e: any, id: any, item: any) {
 
   if (currentlyDragging.value === id && dragging.value) {
 
-     xPos.value = e.clientX - xStart.value;
+    xPos.value = e.clientX - xStart.value;
 
-    if(xPos.value <= -100 ) {
+    if (xPos.value <= -100) {
       shopingList.value.splice(shopingList.value.indexOf(item), 1);
       console.log(item);
       currentlyDragging.value = null;
@@ -33,28 +40,28 @@ function onDrag(e: any, id: any, item: any) {
     }
   }
 }
+
 function dragEnd() {
   dragging.value = false;
   currentlyDragging.value = null;
   xPos.value = 0;
   console.log(xPos.value);
 }
+
 function priorityChange(itemToChange: any) {
+
   console.log(itemToChange);
   console.log(itemToChange.priority);
- if (itemToChange.priority  < 3) {
-itemToChange.priority = itemToChange.priority + 1;
-   console.log(itemToChange.priority);
-   shopingList.value.indexOf([itemToChange]);
+  if (itemToChange.priority < 3) {
+    itemToChange.priority = itemToChange.priority + 1;
+    console.log(itemToChange.priority);
+    shopingList.value.indexOf([itemToChange]);
 
-    shopingList.value.splice(shopingList.value.indexOf(itemToChange), 1);
-    shopingList.value.push(itemToChange);
- }
- else {
-   return;
- }
+      updateShoppingItemFromFireStore(itemToChange, 'items');
 
-
+  } else {
+    return;
+  }
 }
 function removeWithDealey(item: any) {
   fadeOut.value = true;
@@ -62,46 +69,48 @@ function removeWithDealey(item: any) {
   console.log(item);
   setTimeout(() => {
     shopingList.value.splice(shopingList.value.indexOf(item), 1);
+    deleteShoppingItemFromFireStore(item, 'items');
+    //dodaje do historii date stampa
+    const dateStamp = new Date().getTime();
+    const removedItem = {...item, dateStamp};
+    addShoppingItemToFireStore(removedItem, 'history');
     fadeOut.value = false;
   }, 250);
-
 }
-
 </script>
 
 <template>
-<div class="itemFull" v-for="item in shopingList">
-  <li
-
-      :key="item.id"
-      @mousedown="dragStart ($event, item.id)"
-      @mousemove="onDrag ($event, item.id, item)"
-      @mouseup="dragEnd"
-      @touchstart="dragStart($event,item.id)"
-      @touchmove="onDrag($event, item.id, item)"
-      @touchend="dragEnd"
-      :class="{'animation': item.end, }"
-      :style="{left: item.id === currentlyDragging ? xPos + 'px': '0px',
+  <div class="itemFull" v-for="item in shopingList">
+    <li
+        :key="item.id"
+        @mousedown="dragStart ($event, item.id)"
+        @mousemove="onDrag ($event, item.id, item)"
+        @mouseup="dragEnd"
+        @touchstart="dragStart($event,item.id)"
+        @touchmove="onDrag($event, item.id, item)"
+        @touchend="dragEnd"
+        :class="{'animation': item.end, }"
+        :style="{left: item.id === currentlyDragging ? xPos + 'px': '0px',
               opacity: item.id === currentlyDragging ? 1 - Math.abs(xPos/100) : 1,
 
       }"
-  >
-    <div class="nameItem" :class="{
+    >
+      <div class="nameItem" :class="{
       'lowPriority': item.priority === 2,
       'highPriority': item.priority === 3
 
-    }">{{item.name}} {{item.priority}}</div>
-    <div>
-    <i>{{item.count}}</i>
-    </div>
-    <div class="changePrioryty" @click="priorityChange(item)">
-      X
-    </div>
-    <div class="okButton" @click="removeWithDealey(item) "></div>
+    }">{{ item.name }} {{ item.priority }}
+      </div>
+      <div>
+        <i>{{ item.count }}</i>
+      </div>
+      <div class="changePrioryty" @click="priorityChange(item)">
+        X
+      </div>
+      <div class="okButton" @click="removeWithDealey(item) "></div>
 
-
-  </li>
-</div>
+    </li>
+  </div>
 </template>
 
 <style scoped>
@@ -114,25 +123,31 @@ function removeWithDealey(item: any) {
   padding: 0 9px;
 
 }
-.lowPriority{
+
+.lowPriority {
   color: orange;
 }
+
 .highPriority {
   color: red;
 }
+
 i {
   margin: 0 10px;
   width: 10%;
   font-size: 1.3rem;
 }
+
 i::before {
   content: 'x';
   font-size: 1rem;
   margin-right: 5px;
 }
+
 .animation {
   animation: slideOutToLeft 0.3s ease-in-out;
 }
+
 @keyframes slideOutToLeft {
   0% {
     transform: translateX(-10%);
@@ -145,7 +160,7 @@ i::before {
 }
 
 .itemFull {
-position: relative;
+  position: relative;
   width: 300px;
   height: 50px;
   display: flex;
@@ -153,10 +168,11 @@ position: relative;
   align-items: center;
   transition: 1s;
 }
+
 li {
   color: #0d0d0d;
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   flex-wrap: nowrap;
   list-style: none;
   padding: 10px;
@@ -182,8 +198,9 @@ li {
 .okButton:hover {
   border-bottom: green solid 2px;
   border-right: green solid 2px;
-  transition: 0.4s ;
+  transition: 0.4s;
 }
+
 .nameItem {
   width: 70%;
   text-align: left;

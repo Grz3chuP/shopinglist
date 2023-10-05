@@ -27,6 +27,7 @@ h3 {
   padding: 10px 0;
   text-align: center;
   font-size: 1.4rem;
+  color: #0d0d0d;
 
 }
 .quantity {

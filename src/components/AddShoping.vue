@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {shopingList} from "@/store";
+import {addShoppingItemToFireStore} from "@/firestore";
 
 let shopingName = ref('');
 let shopingCount = ref(1);
@@ -11,34 +12,38 @@ function addToShopingList() {
     return;
   }
 
-shopingList.value.push({name: shopingName.value , count: shopingCount.value, priority: 1 , id: shopingList.value.length , end: false})
-console.log(shopingList.value);
+  let item = {name: shopingName.value, count: shopingCount.value, priority: 1, id: shopingList.value.length, end: false};
+  shopingList.value.push(item);
+
+  addShoppingItemToFireStore(item, 'items');
+
+  console.log(shopingList.value);
   shopingName.value = '';
   shopingCount.value = 1;
 }
 </script>
 
 <template>
-<section>
+  <section>
 
-  <div class="formToAdd">
-    <h3>Dodaj nowy produkt do twojej listy zakupów</h3>
-    <button class="zamknijBtn" @click="$emit('zamknij')">Zamknij</button>
-    <form @submit.prevent="addToShopingList" >
-      <input type="text" placeholder="Podaj nazwe Produktu" v-model="shopingName">
-      <div class="itemNumberAdd">
-        <label for="count">Ilość</label>
-        <input type="number" id="count" name="count" min="1" max="10"  v-model="shopingCount" >
-        max 10
-      </div>
-      <div class="ion-activatable ripple-parent rounded-rectangle">
-        <ion-ripple-effect></ion-ripple-effect>
-      <button class="addButton " > Dodaj</button>
-      </div>
-    </form>
-  </div>
+    <div class="formToAdd">
+      <h3>Dodaj nowy produkt do twojej listy zakupów</h3>
+      <button class="zamknijBtn" @click="$emit('zamknij')">Zamknij</button>
+      <form @submit.prevent="addToShopingList">
+        <input type="text" placeholder="Podaj nazwe Produktu" v-model="shopingName">
+        <div class="itemNumberAdd">
+          <label for="count">Ilość</label>
+          <input type="number" id="count" name="count" min="1" max="10" v-model="shopingCount">
+          max 10
+        </div>
+        <div class="ion-activatable ripple-parent rounded-rectangle">
+          <ion-ripple-effect></ion-ripple-effect>
+          <button class="addButton "> Dodaj</button>
+        </div>
+      </form>
+    </div>
 
-</section>
+  </section>
 
 </template>
 
@@ -46,13 +51,14 @@ console.log(shopingList.value);
 .addButton {
   color: #0d0d0d;
 }
+
 section {
 
   z-index: 10;
   position: absolute;
-  top:30%;
+  top: 40%;
   transform: translateY(-50%);
-  animation: openTab 0.5s ease-in-out;
+  animation: openTab 0.3s ease-in-out;
 
 }
 
@@ -62,8 +68,8 @@ section {
     top: 0;
   }
   100% {
-   opacity: 1;
-    top: 30%;
+    opacity: 1;
+    top: 40%;
     transform: translateY(-50%);
   }
 
@@ -83,14 +89,16 @@ section {
 
   background: beige;
 }
+
 input {
   padding: 0.7rem;
   border-radius: 4px;
-  box-shadow: rgba(128,128,128, 0.3) 1px 1px 2px 1px ;
+  box-shadow: rgba(128, 128, 128, 0.3) 1px 1px 2px 1px;
   list-style: none;
   border: 1px solid gray;
   font-size: 1.2rem;
 }
+
 form {
   display: flex;
   justify-content: center;
@@ -103,31 +111,35 @@ form button {
   padding: 1rem;
   border-radius: 4px;
   border: 1px solid gray;
-  background-color: rgb(255,255,255);
+  background-color: rgb(255, 255, 255);
   font-size: 1.1rem;
-  box-shadow: rgba(128,128,128, 0.3) 1px 3px 2px 1px ;
+  box-shadow: rgba(128, 128, 128, 0.3) 1px 3px 2px 1px;
 }
+
 form button:hover {
   background-color: gray;
   color: white;
 }
+
 .itemNumberAdd {
   margin: 5px;
   padding: 5px;
 }
+
 label {
   margin: 5px;
   padding: 5px;
   font-size: 1.2rem;
 }
+
 .zamknijBtn {
   color: #0d0d0d;
   margin: 5px;
   padding: 5px;
   border-radius: 4px;
   border: 1px solid gray;
-  background-color: rgb(255,255,255);
+  background-color: rgb(255, 255, 255);
   font-size: 1.1rem;
-  box-shadow: rgba(128,128,128, 0.3) 1px 3px 2px 1px ;
+  box-shadow: rgba(128, 128, 128, 0.3) 1px 3px 2px 1px;
 }
 </style>

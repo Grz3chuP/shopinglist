@@ -4,6 +4,7 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 
+console.log(process.env.VUE_APP_API_KEY);
 
 // Your web app's Firebase configuration
 const firebaseConfig = {

@@ -100,6 +100,7 @@ function refreshPage() {
 
 <style scoped>
 .refreshIcon {
+  color: #0d0d0d;
   padding: 4px;
   border: 1px solid gray;
   border-radius: 5px;
@@ -137,12 +138,16 @@ h2 {
  scale: 1.2;
 }
 .itemHistory {
+  display: flex;
+  align-items: center;
   margin: 5px;
   padding: 5px;
   border-radius: 5px;
   border: 1px solid gray;
+  height: fit-content;
   box-shadow: rgba(119, 119, 119, 0.6) 2px 3px 2px 0;
   background-color: #cbfc97;
+  color: #0d0d0d;
 }
 .itemHistoryWrapper {
   display: flex;

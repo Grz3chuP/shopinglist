@@ -3,6 +3,8 @@
 import {historyList} from "@/store";
 import {deleteShoppingItemFromFireStore, getShoppingListFromFireStoreOrEmptyArray} from "@/firestore";
 import {computed, ref} from "vue";
+import {IonIcon} from "@ionic/vue";
+import {refresh} from "ionicons/icons";
 
 async function getHistory() {
   historyList.value = await getShoppingListFromFireStoreOrEmptyArray('history');
@@ -58,9 +60,11 @@ function refreshPage() {
 
 <template>
   <section>
-    <div class="eraseHistoryButton" @click="eraseHistory">
+    <div class="eraseHistoryButton " @click="eraseHistory">
       Wyczyść historię
+
     </div>
+    <ion-icon class="refreshIcon" aria-hidden="true" :icon="refresh" @click="refreshPage"></ion-icon>
     <h2>
       Liczba przedmiotów {{ allHistoryCount }}
     </h2>
@@ -81,6 +85,16 @@ function refreshPage() {
 </template>
 
 <style scoped>
+.refreshIcon {
+  padding: 4px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  box-shadow: rgba(119, 119, 119, 0.6) 2px 3px 2px 0;
+  cursor: pointer;
+}
+.refreshIcon:hover {
+  scale: 1.2;
+}
 section {
   display: flex;
   flex-direction: column;

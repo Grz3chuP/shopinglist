@@ -5,7 +5,7 @@ import {addShoppingItemToFireStore} from "@/firestore";
 
 let shopingName = ref('');
 let shopingCount = ref(1);
-
+let lastItem = ref ('');
 function addToShopingList() {
   console.log(shopingName.value);
   if (shopingName.value === '') {
@@ -13,6 +13,7 @@ function addToShopingList() {
   }
 
   let item = {name: shopingName.value, count: shopingCount.value, priority: 1, id: shopingList.value.length, end: false};
+  lastItem = item.name;
   shopingList.value.push(item);
 
   addShoppingItemToFireStore(item, 'items');
@@ -29,6 +30,7 @@ function addToShopingList() {
     <div class="formToAdd">
       <h3>Dodaj nowy produkt do twojej listy zakupów</h3>
       <button class="zamknijBtn" @click="$emit('zamknij')">Zamknij</button>
+      <div class="lastItem">Dodano: <i>{{lastItem}}</i></div>
       <form @submit.prevent="addToShopingList">
         <input type="text" placeholder="Podaj nazwe Produktu" v-model="shopingName">
         <div class="itemNumberAdd">
@@ -48,12 +50,16 @@ function addToShopingList() {
 </template>
 
 <style scoped>
+h3 {
+  margin: 5px;
+  padding: 0;
+  font-size: 1.2rem;
+}
 .addButton {
   color: #0d0d0d;
 }
 
 section {
-
   z-index: 10;
   position: absolute;
   top: 40%;
@@ -134,12 +140,12 @@ label {
 
 .zamknijBtn {
   color: #0d0d0d;
-  margin: 5px;
+
   padding: 5px;
   border-radius: 4px;
   border: 1px solid gray;
   background-color: rgb(255, 255, 255);
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   box-shadow: rgba(128, 128, 128, 0.3) 1px 3px 2px 1px;
 }
 </style>

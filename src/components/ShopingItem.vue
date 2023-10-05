@@ -7,6 +7,8 @@ import {
   deleteShoppingItemFromFireStore,
   updateShoppingItemFromFireStore
 } from "@/firestore";
+import {IonIcon} from "@ionic/vue";
+import{arrowUp} from "ionicons/icons";
 
 let currentlyDragging = ref(null);
 let dragging = ref(false);
@@ -99,14 +101,13 @@ function removeWithDealey(item: any) {
       'lowPriority': item.priority === 2,
       'highPriority': item.priority === 3
 
-    }">{{ item.name }} {{ item.priority }}
+    }">{{ item.name }}
       </div>
       <div>
         <i>{{ item.count }}</i>
       </div>
-      <div class="changePrioryty" @click="priorityChange(item)">
-        X
-      </div>
+      <ion-icon class="changePrioryty" :icon="arrowUp" @click="priorityChange(item)"></ion-icon>
+
       <div class="okButton" @click="removeWithDealey(item) "></div>
 
     </li>
@@ -117,11 +118,15 @@ function removeWithDealey(item: any) {
 .changePrioryty {
   margin: 0 5px;
   cursor: pointer;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   border-right: #0d0d0d solid 1px;
   border-left: #0d0d0d solid 1px;
   padding: 0 9px;
 
+}
+.changePrioryty:hover {
+  color: green;
+  transition: 0.3s;
 }
 
 .lowPriority {

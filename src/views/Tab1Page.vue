@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>
+        <ion-title style="padding: 0">
           <div>
           <ShoppingHeader/>
           </div>

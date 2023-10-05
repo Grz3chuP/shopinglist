@@ -19,10 +19,11 @@ import { shopingList} from "@/store";
 h3 {
   margin: 0;
   padding: 0;
+  font-size: 1.7rem;
 }
 .shoppingHeader {
 
-  background-color: #fff;
+  background-color: #ffffff;
   border-bottom: 1px solid #eee;
   padding: 10px 0;
   text-align: center;
@@ -35,32 +36,11 @@ h3 {
   display: inline-block;
   width: 30px;
   height: 30px;
-
   color: #131313;
   font-size: 1.3rem;
-
   margin-left: 10px;
 }
-.quantity::after {
-  content: '';
-  position: absolute;
-  transform: rotateZ(-30deg) translateY(-50%);
-  width: 40px;
-  height: 2px;
-  background-color: orange;
-  top: 50%;
 
-}
-.quantity::before {
-  content: '';
-  left: -105%;
-  top: 50%;
-  position: absolute;
-  transform: rotateZ(30deg) translateY(-50%);
-  width: 40px;
-  height: 2px;
-  background-color: orange;
-}
 .fullMeter {
 
   position: absolute;

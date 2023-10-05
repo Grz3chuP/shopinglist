@@ -8,7 +8,7 @@ import {refresh} from "ionicons/icons";
 
 async function getHistory() {
   historyList.value = await getShoppingListFromFireStoreOrEmptyArray('history');
-  console.log(historyList.value);
+
 }
 
 getHistory();
@@ -29,22 +29,36 @@ const allHistoryCount = computed(() => {
   }
   return totalNumberOfItems.value;
 });
+
 const filterNames = computed( () => {
   const historyArray = historyList.value;
   return [...new Set(historyArray.map((item: any) => item.name))];
 
 });
 
+//tu sie krzaczyło bo był ref w srodku funkcji
 function filteredNumber(name: any) {
   const historyArray = historyList.value;
-  let totalNumberOfItems = ref(0);
+  let totalNumberOfItems = 0;
   for (let i: number = 0; i < historyArray.length; ++i) {
     if (historyArray[i].name === name) {
-      totalNumberOfItems.value += historyArray[i].count;
+      totalNumberOfItems+= historyArray[i].count;
     }
   }
-  return totalNumberOfItems.value;
+  return totalNumberOfItems;
 }
+
+// const filteredNumber = (name: any) => {
+//   const historyArray = historyList.value;
+//   let totalNumberOfItems = 0;
+//   for (let i: number = 0; i < historyArray.length; ++i) {
+//     if (historyArray[i].name === name) {
+//       totalNumberOfItems += historyArray[i].count;
+//     }
+//   }
+//   return totalNumberOfItems;
+// };
+
 
 function eraseHistory() {
   for (let i: number = 0; i < historyList.value.length; ++i) {
@@ -72,7 +86,7 @@ function refreshPage() {
      <div class="itemHistory"
           v-for="items in filterNames"
           :style="{fontSize: filteredNumber(items) * 0.05 + 0.9 +'rem'}"
-     >
+>
        {{items}}
        -
        <i>
@@ -99,9 +113,10 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   position: relative;
-  margin: 10px;
+  height: 100vh ;
+background-color: #ffffff;
 
 }
 
@@ -133,10 +148,8 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
   gap: 5px;
-  width: 100%;
-  height: 100%;
+
 
 }
 </style>

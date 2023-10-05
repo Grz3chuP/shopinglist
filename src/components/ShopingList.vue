@@ -42,13 +42,14 @@ getShopingList();
 
 
 main{
-  background-color: #aae2ff;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  height: 100vh;
+
+
 }
 
 .openFormButton {

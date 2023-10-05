@@ -1,4 +1,4 @@
-<template>
+<template  >
   <ion-page>
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>

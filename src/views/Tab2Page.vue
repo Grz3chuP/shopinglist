@@ -1,19 +1,19 @@
-<template>
-  <ion-page>
+<template >
+  <ion-page >
     <ion-header>
       <ion-toolbar>
         <ion-title>History</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content :fullscreen="true">
+    <ion-content  :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">History</ion-title>
         </ion-toolbar>
       </ion-header>
 
-      <HistoryList name="Tab 2 page" />
-    </ion-content>
+      <HistoryList  name="Tab 2 page" />
+    </ion-content >
   </ion-page>
 </template>
 

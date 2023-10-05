@@ -11,8 +11,9 @@ function addToShopingList() {
   if (shopingName.value === '') {
     return;
   }
-
-  let item = {name: shopingName.value, count: shopingCount.value, priority: 1, id: shopingList.value.length, end: false};
+  const inputName = shopingName.value;
+  const trimmedName = inputName.trim();
+  let item = {name: trimmedName, count: shopingCount.value, priority: 1, id: shopingList.value.length, end: false};
   lastItem = item.name;
   shopingList.value.push(item);
 

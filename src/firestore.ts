@@ -8,12 +8,12 @@ console.log(process.env.VUE_APP_API_KEY);
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDJ6xWX7yCv0BIqxFRUY7RU085VhccA3VI",
-    authDomain: "shopping-list-98a65.firebaseapp.com",
-    projectId: "shopping-list-98a65",
-    storageBucket: "shopping-list-98a65.appspot.com",
-    messagingSenderId: "906006379379",
-    appId: "1:906006379379:web:44fcc0b0a3b4f578d5a306"
+    apiKey: import.meta.env.VITE_API_KEY,
+    authDomain: import.meta.env.VITE_API_DOMAIN,
+    projectId: import.meta.env.VITE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_APP_ID
 };
 
 // Initialize Firebase
